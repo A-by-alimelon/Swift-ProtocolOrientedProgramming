@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FA7040B725D55BC00020AD42 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7040B625D55BC00020AD42 /* main.swift */; };
+		FA7040BF25D55C470020AD42 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7040BE25D55C470020AD42 /* Protocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		FA7040B325D55BC00020AD42 /* ProtocolOrientedProgramming */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ProtocolOrientedProgramming; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA7040B625D55BC00020AD42 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		FA7040BE25D55C470020AD42 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				FA7040B625D55BC00020AD42 /* main.swift */,
+				FA7040BE25D55C470020AD42 /* Protocol.swift */,
 			);
 			path = ProtocolOrientedProgramming;
 			sourceTree = "<group>";
@@ -120,6 +123,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA7040B725D55BC00020AD42 /* main.swift in Sources */,
+				FA7040BF25D55C470020AD42 /* Protocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
