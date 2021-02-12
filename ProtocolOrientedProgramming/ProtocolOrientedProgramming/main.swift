@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 fileprivate protocol FullName {
     var firstName: String {get set}
     var lastName: String {get set}
@@ -17,7 +16,7 @@ fileprivate protocol FullName {
     mutating func changeName()
 }
 
-// 선택 가능한 프로퍼티 및 메소드를 가진 프로토콜
+/// 선택 가능한 프로퍼티 및 메소드를 가진 프로토콜
 @objc fileprivate protocol Phone {
     var phoneNumber: String {get set}
     @objc optional var emailAddress: String {get set}
@@ -25,7 +24,7 @@ fileprivate protocol FullName {
     @objc optional func getEmail()
 }
 
-// 프로토콜 상속
+/// 프로토콜 상속
 fileprivate protocol Person: FullName {
     var age: Int {get set}
 }
@@ -44,7 +43,7 @@ fileprivate struct Student: Person {
     }
 }
 
-// 프로토콜을 타입으로 사용
+/// 프로토콜을 타입으로 사용
 fileprivate protocol Human {
     var firstName: String {get set}
     var lastName: String {get set}
@@ -107,4 +106,32 @@ for human in humanArray where human is SwiftProgrammer {
 // as로 형 변환
 if let _ = myHuman as? FootballPlayer {
     print("\(myHuman.firstName) is a Football Player")
+}
+
+/// 연관 타입
+fileprivate protocol Queue {
+    associatedtype QueueType
+    mutating func addItem(item: QueueType)
+    mutating func getItem() -> QueueType?
+    func count() -> Int
+}
+
+struct IntQueue: Queue {
+    var items = [Int]()
+    
+    mutating func addItem(item: Int) {
+        items.append(item)
+    }
+    
+    mutating func getItem() -> Int? {
+        if items.count > 0 {
+            return items.remove(at: 0)
+        } else {
+            return nil
+        }
+    }
+    
+    func count() -> Int {
+        return items.count
+    }
 }
