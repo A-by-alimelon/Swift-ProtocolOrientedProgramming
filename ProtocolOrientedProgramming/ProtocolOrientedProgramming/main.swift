@@ -116,7 +116,7 @@ fileprivate protocol Queue {
     func count() -> Int
 }
 
-struct IntQueue: Queue {
+fileprivate struct IntQueue: Queue {
     var items = [Int]()
     
     mutating func addItem(item: Int) {
@@ -135,3 +135,42 @@ struct IntQueue: Queue {
         return items.count
     }
 }
+
+/// 델리게이션
+protocol DisplayNameDelegate {
+    func displayName(name: String)
+}
+
+struct DPerson {
+    var displayNameDelegate: DisplayNameDelegate
+    var firstName = "" {
+        didSet {
+            displayNameDelegate.displayName(name: getFullName())
+        }
+    }
+    var lastName = "" {
+        didSet {
+            displayNameDelegate.displayName(name: getFullName())
+        }
+    }
+    
+    init(displayNameDelegate: DisplayNameDelegate) {
+        self.displayNameDelegate = displayNameDelegate
+    }
+    
+    func getFullName() -> String {
+        return "\(firstName) \(lastName)"
+    }
+}
+
+struct MyDisplayNameDelegate: DisplayNameDelegate {
+    func displayName(name: String) {
+        print("Name: \(name)")
+    }
+}
+
+var displayDelegate = MyDisplayNameDelegate()
+var dPerson = DPerson(displayNameDelegate: displayDelegate)
+dPerson.firstName = "Jon"
+dPerson.lastName = "Hoffman"
+
