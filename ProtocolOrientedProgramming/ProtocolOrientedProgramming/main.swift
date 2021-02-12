@@ -20,4 +20,12 @@ class MyClass {
     }
 }
 
+// struct
+struct MyStruct {
+    var oneProperty: String
+    
+    func oneFunction() {
+        
+    }
+}
 
