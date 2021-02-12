@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol FullName {
+fileprivate protocol FullName {
     var firstName: String {get set}
     var lastName: String {get set}
     func getFullName() -> String
@@ -17,7 +17,7 @@ protocol FullName {
 }
 
 // 선택 가능한 프로퍼티 및 메소드를 가진 프로토콜
-@objc protocol Phone {
+@objc fileprivate protocol Phone {
     var phoneNumber: String {get set}
     @objc optional var emailAddress: String {get set}
     func dialNumber()
@@ -25,11 +25,11 @@ protocol FullName {
 }
 
 // 프로토콜 상속
-protocol Person: FullName {
+fileprivate protocol Person: FullName {
     var age: Int {get set}
 }
 
-struct Student: Person {
+fileprivate struct Student: Person {
     var firstName: String
     var lastName: String
     var age: Int
@@ -43,6 +43,17 @@ struct Student: Person {
     }
 }
 
+// 프로토콜을 타입으로 사용
+fileprivate protocol Human {
+    var firstName: String {get set}
+    var lastName: String {get set}
+    var birthDate: Date {get set}
+    var profession: String {get}
+    init(firstName: String, lastName: String, birthDate: Date)
+}
 
-
-
+fileprivate func updateHuman(human: Human) -> Human {
+    var newHuman: Human = human
+    //human 갱신
+    return newHuman
+}
