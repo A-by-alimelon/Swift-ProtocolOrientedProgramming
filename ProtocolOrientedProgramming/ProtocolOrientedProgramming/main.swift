@@ -174,3 +174,58 @@ var dPerson = DPerson(displayNameDelegate: displayDelegate)
 dPerson.firstName = "Jon"
 dPerson.lastName = "Hoffman"
 
+/// 프로토콜 설계
+// 로봇의 움직임에 대한 프로토콜 정의
+protocol RobotMovement {
+    func forward(speedPercent: Double)
+    func reverse(speedPercent: Double)
+    func left(speedPercent: Double)
+    func right(speedPercent: Double)
+    func stop()
+}
+
+protocol RobotMovementThreeDimensions: RobotMovement {
+    func up(speedPercent: Double)
+    func down(speedPercent: Double)
+}
+
+// 로봇에 부착할 수 있는 센서 프로토콜 정의
+protocol Sensor {
+    var sensorType: String {get}
+    var sensorName: String {get set}
+    
+    init(sensorName: String)
+    func pollSensor()
+}
+
+protocol EnviromentSensor: Sensor {
+    func currentTemperature() -> Double
+    func currentHumidity() -> Double
+}
+
+protocol RangeSensor: Sensor {
+    // 특정 거리 내에 있으면 클로저를 호출할 예정
+    func setRangeNotification(rangeCentimeter: Double, rangeNotification: () -> Void)
+    func currentRange() -> Double
+}
+
+protocol DisplaySensor: Sensor {
+    func displayMessage(message: String)
+}
+
+protocol WirelessSensor: Sensor {
+    // 메세지가 들어오면 클로저를 호출할 예정
+    func setMessageReceivedNotification(messageNotification:(String) -> Void)
+    func messageSend(message: String)
+}
+
+// 로봇의 기본 요구사항에 대한 프로토콜 정의
+protocol Robot {
+    var name: String {get set}
+    var robotMovement: RobotMovement {get set}
+    var sensors: [Sensor] {get}
+    
+    init(name: String, robotMovement: RobotMovement)
+    func addSensor(sensor: Sensor)
+    func pollSensors()
+}
