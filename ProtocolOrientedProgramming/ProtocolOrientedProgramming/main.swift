@@ -295,3 +295,12 @@ class Dog: Quadruped {
         print("Barking")
     }
 }
+
+/// 다이내믹 디스패치
+// 런타임 오버헤드 줄이기 - final
+final class MyFinalClass {} // 서브클래싱 불가
+
+class MyClassWithFinalPropertyAndMethod {
+    final func myFunc() {}
+    final var myProperty = 0 // 오버라이드 불가 
+}
