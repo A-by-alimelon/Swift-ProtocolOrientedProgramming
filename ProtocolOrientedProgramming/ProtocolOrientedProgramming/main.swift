@@ -201,3 +201,24 @@ print("Value: \(val.name) - \(val.grade)")
 
 extraCreditReferenceType(ref: ref, extraCredit: 5)
 print("Reference: \(ref.name) - \(ref.grade)")
+
+// 참조 타입에서의 문제
+func getGradeForAssignment(assignment: MyReferenceType) {
+    let num = Int(arc4random_uniform(20) + 80)
+    assignment.grade = num
+    print("Grade for \(assignment.name) is \(num)")
+}
+
+var mathGrades = [MyReferenceType]()
+var students = ["Jon", "Kim", "Kailey", "Kara"]
+var mathAssignment = MyReferenceType(name: "", assignment: "MathAssignment", grade: 0)
+
+for student in students {
+    mathAssignment.name = student
+    getGradeForAssignment(assignment: mathAssignment)
+    mathGrades.append(mathAssignment)
+}
+
+mathGrades.forEach {
+    print("\($0.name): grade \($0.grade)")
+}
