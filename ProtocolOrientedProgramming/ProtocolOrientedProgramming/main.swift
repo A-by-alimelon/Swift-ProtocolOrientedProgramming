@@ -57,3 +57,76 @@ case .IPad(let model, let memory):
     print("iPad \(model) \(memory)")
 }
 
+
+// 연산 프로퍼티, 메소드가 있는 enum
+enum Reindeer: String {
+    case Dasher, Dancer, Prancer, Vixen, Comet, Cupid, Donner, Blitzen, Rudolph
+    
+    static var allCases: [Reindeer] {
+        return [Dasher, Dancer, Prancer, Vixen, Comet, Cupid, Donner, Blitzen, Rudolph]
+    }
+    
+    static func randomCase() -> Reindeer {
+        let randomValue = Int(arc4random_uniform(UInt32(allCases.count)))
+        return allCases[randomValue]
+    }
+}
+
+enum BookFormat {
+    case PaperBack(pageCount: Int, price: Double)
+    case HardCover(pageCount: Int, price: Double)
+    case PDF(pageCount: Int, price: Double)
+    case EPub(pageCount: Int, price: Double)
+    case Kindle(pageCount: Int, price: Double)
+}
+
+var paperBack = BookFormat.PaperBack(pageCount: 220, price: 39.99)
+
+switch paperBack {
+case .PaperBack(pageCount: let pageCount, price: let price):
+    print("\(pageCount) - \(price)")
+case .HardCover(pageCount: let pageCount, price: let price):
+    print("\(pageCount) - \(price)")
+case .PDF(pageCount: let pageCount, price: let price):
+    print("\(pageCount) - \(price)")
+case .EPub(pageCount: let pageCount, price: let price):
+    print("\(pageCount) - \(price)")
+case .Kindle(pageCount: let pageCount, price: let price):
+    print("\(pageCount) - \(price)")
+}
+
+// 연관 값 검색을 용이하게 만들기
+extension BookFormat {
+    var pageCount: Int {
+        switch self {
+        case .PaperBack(pageCount: let pageCount, _):
+            return pageCount
+        case .HardCover(pageCount: let pageCount, _):
+            return pageCount
+        case .PDF(pageCount: let pageCount, _):
+            return pageCount
+        case .EPub(pageCount: let pageCount, _):
+            return pageCount
+        case .Kindle(pageCount: let pageCount, _):
+            return pageCount
+        }
+    }
+    
+    var price: Double {
+        switch self {
+        case .PaperBack(_, price: let price):
+            return price
+        case .HardCover(_, price: let price):
+            return price
+        case .PDF(_, price: let price):
+            return price
+        case .EPub(_, price: let price):
+            return price
+        case .Kindle(_, price: let price):
+            return price
+        }
+    }
+}
+
+var paperBack2 = BookFormat.PaperBack(pageCount: 420, price: 59.99)
+print("\(paperBack2.pageCount) - \(paperBack2.price)")
