@@ -246,7 +246,7 @@ mathGrades2.forEach {
     print("\($0.name): grade \($0.grade)")
 }
 
-// 참조 타입 - 재귀적 데이터 타입
+/// 참조 타입 - 재귀적 데이터 타입
 class LinkedListReferenceType {
     var value: String
     var next: LinkedListReferenceType?
@@ -258,5 +258,40 @@ class LinkedListReferenceType {
 
 struct LinkedListValueType {
     var value: String
-    var next: LinkedListValueType? // error
+//    var next: LinkedListValueType? // error
+}
+
+/// 참조 타입 - 상속
+class Animal {
+    var numberOfLegs = 0
+    
+    func sleep() {
+        print("zzzzz")
+    }
+    func walking() {
+        print("Walking on \(numberOfLegs) legs")
+    }
+    func speaking() {
+        print("No sound")
+    }
+}
+
+class Biped: Animal {
+    override init() {
+        super.init()
+        numberOfLegs = 2
+    }
+}
+
+class Quadruped: Animal {
+    override init() {
+        super.init()
+        numberOfLegs = 4
+    }
+}
+
+class Dog: Quadruped {
+    override func speaking() {
+        print("Barking")
+    }
 }
