@@ -128,5 +128,14 @@ extension BookFormat {
     }
 }
 
-var paperBack2 = BookFormat.PaperBack(pageCount: 420, price: 59.99)
-print("\(paperBack2.pageCount) - \(paperBack2.price)")
+print("\(paperBack.pageCount) - \(paperBack.price)")
+
+extension BookFormat {
+    func purchaseTogether(otherFormat: BookFormat) -> Double {
+        return (self.price + otherFormat.price) * 0.80
+    }
+}
+
+var pdf = BookFormat.PDF(pageCount: 180, price: 14.99)
+var total = paperBack.purchaseTogether(otherFormat: pdf)
+
