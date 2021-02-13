@@ -245,3 +245,18 @@ for student in students2 {
 mathGrades2.forEach {
     print("\($0.name): grade \($0.grade)")
 }
+
+// 참조 타입 - 재귀적 데이터 타입
+class LinkedListReferenceType {
+    var value: String
+    var next: LinkedListReferenceType?
+    
+    init(value: String) {
+        self.value = value
+    }
+}
+
+struct LinkedListValueType {
+    var value: String
+    var next: LinkedListValueType? // error
+}
