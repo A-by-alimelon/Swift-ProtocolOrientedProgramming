@@ -7,7 +7,7 @@
 
 import Foundation
 
-// class
+/// class
 class MyClass {
     var oneProperty: String
     
@@ -20,7 +20,7 @@ class MyClass {
     }
 }
 
-// struct
+/// struct
 struct MyStruct {
     var oneProperty: String
     
@@ -29,7 +29,7 @@ struct MyStruct {
     }
 }
 
-// enum
+/// enum
 enum Devices: String {
     case IPod = "iPod"
     case IPhone = "iPhone"
@@ -139,7 +139,7 @@ extension BookFormat {
 var pdf = BookFormat.PDF(pageCount: 180, price: 14.99)
 var total = paperBack.purchaseTogether(otherFormat: pdf)
 
-// tuple
+/// tuple
 // 이름 없는 튜플
 let mathGrade1 = ("Jon", 100)
 let (name, score) = mathGrade1
@@ -161,3 +161,43 @@ print("\(tip.tipAmount) - \(tip.totalAmount)")
 
 // 별칭 부여
 typealias myTuple = (tipAmount: Double, totalAmount: Double)
+
+/// 값 타입과 참조 타입
+// 값 타입
+struct MyValueType {
+    var name: String
+    var assignment: String
+    var grade: Int
+}
+
+// 참조 타입
+class MyReferenceType {
+    var name: String
+    var assignment: String
+    var grade: Int
+    
+    init(name: String, assignment: String, grade: Int) {
+        self.name = name
+        self.assignment = assignment
+        self.grade = grade
+    }
+}
+
+// 차이점
+var val = MyValueType(name: "Jon", assignment: "Math Test 1", grade: 90)
+var ref = MyReferenceType(name: "Jon", assignment: "Math Test 1", grade: 90)
+
+func extraCreditValueType(val: MyValueType, extraCredit: Int) {
+    var val = val
+    val.grade += extraCredit
+}
+
+func extraCreditReferenceType(ref: MyReferenceType, extraCredit: Int) {
+    ref.grade += extraCredit
+}
+
+extraCreditValueType(val: val, extraCredit: 5)
+print("Value: \(val.name) - \(val.grade)")
+
+extraCreditReferenceType(ref: ref, extraCredit: 5)
+print("Reference: \(ref.name) - \(ref.grade)")
