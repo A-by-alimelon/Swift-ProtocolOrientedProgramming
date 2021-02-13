@@ -222,3 +222,26 @@ for student in students {
 mathGrades.forEach {
     print("\($0.name): grade \($0.grade)")
 }
+
+print("==========================")
+
+// 값 타입에서의 원본 값 변경
+func getGradeForAssignment(assignment: inout MyValueType) {
+    let num = Int(arc4random_uniform(20) + 80)
+    assignment.grade = num
+    print("Grade for \(assignment.name) is \(num)")
+}
+
+var mathGrades2 = [MyValueType]()
+var students2 = ["Jon", "Kim", "Kailey", "Kara"]
+var mathAssignment2 = MyValueType(name: "", assignment: "MathAssignment", grade: 0)
+
+for student in students2 {
+    mathAssignment2.name = student
+    getGradeForAssignment(assignment: &mathAssignment2)
+    mathGrades2.append(mathAssignment2)
+}
+
+mathGrades2.forEach {
+    print("\($0.name): grade \($0.grade)")
+}
