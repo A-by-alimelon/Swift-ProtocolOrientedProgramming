@@ -54,3 +54,47 @@ extension Int {
         return self * self
     }
 }
+
+/// 프로토콜 확장
+extension Collection {
+    func evenElements() -> [Iterator.Element] {
+        var index = startIndex
+        var result: [Iterator.Element] = []
+        var i = 0
+        repeat {
+            if i % 2 == 0 {
+                result.append(self[index])
+            }
+            index = self.index(after: index)
+            i += 1
+        } while index != endIndex
+        return result
+    }
+    
+    func myShuffle() -> [Iterator.Element] {
+        return sorted() { left, right in
+            return arc4random() < arc4random()
+        }
+    }
+}
+
+var origArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+var newArray = origArray.evenElements()
+var ranArray = origArray.myShuffle()
+
+var origDict = [1: "One", 2: "Two", 3: "Three", 4: "Four"]
+var returnElements = origDict.evenElements() // dictionary는 순서가 없기 때문에 원하는대로 동작하지 않음
+
+for item in returnElements {
+    print(item)
+}
+
+// 확장 시 제약 추가
+extension Collection where Self: ExpressibleByArrayLiteral {
+    
+}
+
+extension Collection where Iterator.Element: Comparable {
+    
+}
