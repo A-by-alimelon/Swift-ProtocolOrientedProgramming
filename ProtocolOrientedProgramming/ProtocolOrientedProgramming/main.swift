@@ -91,10 +91,72 @@ for item in returnElements {
 }
 
 // 확장 시 제약 추가
-extension Collection where Self: ExpressibleByArrayLiteral {
-    
+extension Collection where Self: ExpressibleByArrayLiteral { }
+
+extension Collection where Iterator.Element: Comparable { }
+
+/// 프로토콜 확장을 이용한 문장 유효성 검사
+protocol TextValidation {
+    var regExFindMatchString: String {get}
+    var validationMessage: String {get}
 }
 
-extension Collection where Iterator.Element: Comparable {
+// TextValidation 프로토콜 확장
+extension TextValidation {
+    var regExMatchingString: String {
+        get {
+            return regExFindMatchString + "$"
+        }
+    }
     
+    func validateString(str: String) -> Bool {
+        if let _ = str.range(of: regExMatchingString, options: .regularExpression) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func getMatchingString(str: String) -> String? {
+        if let newMatch = str.range(of: regExFindMatchString, options: .regularExpression) {
+            return str.substring(with: newMatch) // deprecated된 문법
+        } else {
+            return nil
+        }
+    }
 }
+
+class AlphabeticValidation: TextValidation {
+    static let sharedInstance = AlphabeticValidation()
+    private init() {}
+
+    // 알파벳 문자가 0개에서 10개 있는지 확인
+    let regExFindMatchString = "^[a-zA-Z]{0,10}"
+    let validationMessage = "Can only contain Alpha characters"
+}
+
+class AlphaNumericValidation: TextValidation {
+    static let sharedInstance = AlphaNumericValidation()
+    private init() {}
+    
+    let regExFindMatchString = "^[a-zA-Z0-9]{0,15}"
+    let validationMessage = "Can only contain Alpha Numeric characters"
+}
+
+class DisplayNameValidation: TextValidation {
+    static let sharedInstance = DisplayNameValidation()
+    private init() {}
+    
+    let regExFindMatchString = "^[\\s?[a-zA-Z0-9\\-_\\s]]{0,15}"
+    let validationMessage = "Display Name can contain Alphanumeric Characters"
+}
+
+var myString1 = "abcxyz"
+var myString2 = "abc123"
+var validation = AlphabeticValidation.sharedInstance
+validation.validateString(str: myString1)
+validation.validateString(str: myString2)
+
+validation.getMatchingString(str: myString1)
+validation.getMatchingString(str: myString2)
+
