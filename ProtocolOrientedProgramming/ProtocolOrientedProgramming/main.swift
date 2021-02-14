@@ -154,9 +154,23 @@ class DisplayNameValidation: TextValidation {
 var myString1 = "abcxyz"
 var myString2 = "abc123"
 var validation = AlphabeticValidation.sharedInstance
-validation.validateString(str: myString1)
-validation.validateString(str: myString2)
+print(validation.validateString(str: myString1))
+print(validation.validateString(str: myString2))
 
-validation.getMatchingString(str: myString1)
-validation.getMatchingString(str: myString2)
+print(validation.getMatchingString(str: myString1))
+print(validation.getMatchingString(str: myString2))
 
+/// 표준 라이브러리 확장
+extension Int {
+    func factorial() -> Int {
+        var answer = 1
+        
+        for x in (1...self).reversed() {
+            answer *= x
+        }
+        
+        return answer
+    }
+}
+
+print(10.factorial())
