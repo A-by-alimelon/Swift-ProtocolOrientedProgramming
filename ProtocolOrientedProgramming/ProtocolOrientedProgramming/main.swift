@@ -28,3 +28,15 @@ print("c: \(c) d: \(d)")
 func testGeneric<T, E>(a: T, b: E) {
     print("\(a) \(b)")
 }
+
+/// 제네릭 타입 제약
+func testGenericComparable<T: Comparable>(a: T, b: T) -> Bool {
+    return a == b
+}
+
+class MyClass {}
+protocol MyProtocol {}
+
+func testFunction<T: MyClass, E: MyProtocol>(a: T, b: E) {
+    
+}
