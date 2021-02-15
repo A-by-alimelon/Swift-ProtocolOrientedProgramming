@@ -40,3 +40,47 @@ protocol MyProtocol {}
 func testFunction<T: MyClass, E: MyProtocol>(a: T, b: E) {
     
 }
+
+/// 제네릭 타입
+var stringList = List<String>()
+var intList = List<Int>()
+var customList = List<MyClass>()
+
+// 클래스나 enum도 가능
+class GenericClass<T> {
+    
+}
+
+enum GenericEnum<T> {
+    
+}
+
+// 제네릭으로 List 만들기
+struct List<T> {
+    var items = [T]()
+    
+    mutating func add(item: T) {
+        items.append(item)
+    }
+    
+    func getItemAtIndex(index: Int) -> T? {
+        if items.count > index {
+            return items[index]
+        } else {
+            return nil
+        }
+    }
+}
+
+var list = List<String>()
+list.add(item: "Hello")
+list.add(item: "World")
+print(list.getItemAtIndex(index: 1))
+
+// 여러 플레이스홀더 타입
+class MyObject<T, E> { }
+
+var mo = MyObject<String, Int>()
+
+// 타입 제약
+struct MyStruct<T: Comparable> { }
