@@ -84,3 +84,24 @@ var mo = MyObject<String, Int>()
 
 // 타입 제약
 struct MyStruct<T: Comparable> { }
+
+/// 연관 타입
+protocol MyAssociatedProtocol {
+    associatedtype E
+    var items: [E] {get set}
+    mutating func add(item: E)
+}
+
+struct MyIntType: MyAssociatedProtocol {
+    var items: [Int] = []
+    mutating func add(item: Int) {
+        items.append(item)
+    }
+}
+
+struct MyGenericType<T>: MyAssociatedProtocol {
+    var items: [T] = []
+    mutating func add(item: T) {
+        items.append(item)
+    }
+}
