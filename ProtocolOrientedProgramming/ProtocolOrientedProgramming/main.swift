@@ -174,12 +174,12 @@ struct Queue {
     private var internalQueue = BackendQueue<Int>()
     
     public mutating func addItem(item: Int) {
-        checkUniquelyReferencedInternerQueue()
+        checkUniquelyReferencedInternalQueue()
         internalQueue.addItem(item: item)
     }
     
     public mutating func getItem() -> Int? {
-        checkUniquelyReferencedInternerQueue()
+        checkUniquelyReferencedInternalQueue()
         return internalQueue.getItem()
     }
     
@@ -187,7 +187,7 @@ struct Queue {
         return internalQueue.count()
     }
     
-    mutating private func checkUniquelyReferencedInternerQueue() {
+    mutating private func checkUniquelyReferencedInternalQueue() {
         if !isKnownUniquelyReferenced(&internalQueue) {
             internalQueue = internalQueue.copy()
             print("Making a copy of internalQueue")
@@ -221,3 +221,97 @@ print(queue2.uniquelyReferenced())
 
 queue.printItems()
 queue2.printItems()
+
+/// 프로토콜지향 설계 제네릭
+protocol ListProtocol {
+    associatedtype T
+    
+    subscript<E: Sequence>(indices: E) -> [T] where E.Element == Int {get}
+    mutating func add(_ item: T)
+    func lenth() -> Int
+    func get(at index: Int) -> T?
+    mutating func delete(at index: Int)
+}
+
+private class BackendList<T> {
+    private var items = [T]()
+    
+    public init() { }
+    
+    // 내부적으로 자신의 복사본을 생성할 때 사용
+    private init(_ items: [T]) {
+        self.items = items
+    }
+    
+    public func add(_ item: T) {
+        items.append(item)
+    }
+    
+    public func printItems() {
+        print("\(items)")
+    }
+    
+    public func get(at index: Int) -> T? {
+        return items[index]
+    }
+    
+    public func length() -> Int {
+        return items.count
+    }
+    
+    public func delete(at index: Int) {
+        items.remove(at: index)
+    }
+    
+    // 타입 내에 자신의 복사본을 생성하는 로직을 유지하면 변경 사항이 생겼을 때, 이 부분만 변경하면 되기 때문에 효율적이다.
+    public func copy() -> BackendList<T> {
+        return BackendList<T>(items)
+    }
+}
+
+struct ArrayList<T>: ListProtocol {
+    private var items = BackendList<T>()
+    
+    subscript<E>(indices: E) -> [T] where E : Sequence, E.Element == Int {
+        var result = [T]()
+        for index in indices {
+            if let item = items.get(at: index) {
+                result.append(item)
+            }
+        }
+        return result
+    }
+    
+    public mutating func add(_ item: T) {
+        checkUniquelyReferencedInternalList()
+        items.add(item)
+    }
+    
+    public func lenth() -> Int {
+        return items.length()
+    }
+    
+    public func get(at index: Int) -> T? {
+        return items.get(at: index)
+    }
+    
+    public mutating func delete(at index: Int) {
+        checkUniquelyReferencedInternalList()
+        items.delete(at: index)
+    }
+    
+    mutating private func checkUniquelyReferencedInternalList() {
+        if !isKnownUniquelyReferenced(&items) {
+            items = items.copy()
+            print("Making a copy of internaList")
+        } else {
+            print("Not making a copy of internalList")
+        }
+    }
+}
+
+var arrayList = ArrayList<Int>()
+arrayList.add(1)
+arrayList.add(2)
+arrayList.add(3)
+
