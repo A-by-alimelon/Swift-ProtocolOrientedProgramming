@@ -105,3 +105,28 @@ struct MyGenericType<T>: MyAssociatedProtocol {
         items.append(item)
     }
 }
+
+/// 제네릭 서브스크립트
+extension List {
+    subscript(index: Int) -> T? {
+        return getItemAtIndex(index: index)
+    }
+    
+    subscript<E: Sequence>(indices: E) -> [T] where E.Iterator.Element == Int {
+        var result = [T]()
+        for index in indices {
+            result.append(items[index])
+        }
+        return result
+    }
+}
+
+var myList = List<Int>()
+myList.add(item: 1)
+myList.add(item: 2)
+myList.add(item: 3)
+myList.add(item: 4)
+myList.add(item: 5)
+
+var values = myList[2...4]
+print(values)
