@@ -26,3 +26,30 @@ extension Vehicle {
         return hitPoints > 0 ? true : false
     }
 }
+
+protocol LandVehicle: Vehicle {
+    var landAttack: Bool {get}
+    var landMovement: Bool {get}
+    var landAttackRange: Int {get}
+    
+    func doLandAttack()
+    func doLandMovement()
+}
+
+protocol SeaVehicle: Vehicle {
+    var seaAttack: Bool {get}
+    var seaMovement: Bool {get}
+    var seaAttackRange: Int {get}
+    
+    func doSeaAttack()
+    func doSeaMovement()
+}
+
+protocol AirVehicle: Vehicle {
+    var airAttack: Bool {get}
+    var airMovement: Bool {get}
+    var airAttackRange: Int {get}
+    
+    func doAirAttack()
+    func doAirMovement()
+}
