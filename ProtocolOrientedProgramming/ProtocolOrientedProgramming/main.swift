@@ -97,3 +97,38 @@ struct Amphibious: LandVehicle, SeaVehicle {
         print("Amphibious Sea Move")
     }
 }
+
+var vehicles = [Vehicle]()
+var vh1 = Amphibious()
+var vh2 = Amphibious()
+var vh3 = Tank()
+var vh4 = Tank()
+
+vehicles.append(vh1)
+vehicles.append(vh2)
+vehicles.append(vh3)
+vehicles.append(vh4)
+
+// 형 변환을 이용한 사용
+for (index, vehicle) in vehicles.enumerated() {
+    if let vehicle = vehicle as? AirVehicle {
+        print("vehicle at \(index) is Air")
+    }
+    if let vehicle = vehicle as? LandVehicle {
+        print("vehicle at \(index) is Land")
+    }
+    if let vehicle = vehicle as? SeaVehicle {
+        print("vehicle at \(index) is Sea")
+    }
+}
+
+// where절을 이용하여 사용
+for (index, vehicle) in vehicles.enumerated() where vehicle is LandVehicle {
+    let vh = vehicle as! LandVehicle
+    if vh.landAttack {
+        vh.doLandAttack()
+    }
+    if vh.landMovement {
+        vh.doLandMovement()
+    }
+}
