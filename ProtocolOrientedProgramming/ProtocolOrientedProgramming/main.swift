@@ -53,3 +53,47 @@ protocol AirVehicle: Vehicle {
     func doAirAttack()
     func doAirMovement()
 }
+
+struct Tank: LandVehicle {
+    var hitPoints = 68
+    let landAttack = true
+    let landMovement = true
+    let landAttackRange = 5
+    
+    func doLandAttack() {
+        print("Tank Attack")
+    }
+    
+    func doLandMovement() {
+        print("Tank Move")
+    }
+}
+
+// 프로토콜 컴포지션 사용
+struct Amphibious: LandVehicle, SeaVehicle {
+    var hitPoints = 25
+    let landAttackRange = 1
+    let seaAttackRange = 1
+    
+    let landAttack = true
+    let landMovement = true
+    
+    let seaAttack = true
+    let seaMovement = true
+    
+    func doLandAttack() {
+        print("Amphibious Land Attack")
+    }
+    
+    func doLandMovement() {
+        print("Amphibious Land Move")
+    }
+    
+    func doSeaAttack() {
+        print("Amphibious Sea Attack")
+    }
+    
+    func doSeaMovement() {
+        print("Amphibious Sea Move")
+    }
+}
