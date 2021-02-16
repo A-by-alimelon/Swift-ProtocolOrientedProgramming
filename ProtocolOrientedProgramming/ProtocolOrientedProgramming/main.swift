@@ -140,3 +140,51 @@ class Transformer: Vehicle {
         print("Tranformer Air Move")
     }
 }
+
+var vehicles = [Vehicle]()
+var vh1 = Amphibious()
+var vh2 = Amphibious()
+var vh3 = Tank()
+var vh4 = Transformer()
+vehicles.append(vh1)
+vehicles.append(vh2)
+vehicles.append(vh3)
+vehicles.append(vh4)
+
+for (index, vehicle) in vehicles.enumerated() {
+    if vehicle.isVehicleType(type: .air) {
+        print("Vehicle at \(index) is Air")
+        
+        if vehicle.canVehicleAttack(type: .air) {
+            vehicle.doAirAttack()
+        }
+        
+        if vehicle.canVehicleMove(type: .air) {
+            vehicle.doAirMovement()
+        }
+    }
+    
+    if vehicle.isVehicleType(type: .land) {
+        print("Vehicle at \(index) is Land")
+        
+        if vehicle.canVehicleAttack(type: .land) {
+            vehicle.doLandAttack()
+        }
+        
+        if vehicle.canVehicleMove(type: .land) {
+            vehicle.doLandMovement()
+        }
+    }
+    
+    if vehicle.isVehicleType(type: .sea) {
+        print("Vehicle at \(index) is Sea")
+        
+        if vehicle.canVehicleAttack(type: .sea) {
+            vehicle.doSeaAttack()
+        }
+        
+        if vehicle.canVehicleMove(type: .sea) {
+            vehicle.doSeaMovement()
+        }
+    }
+}
