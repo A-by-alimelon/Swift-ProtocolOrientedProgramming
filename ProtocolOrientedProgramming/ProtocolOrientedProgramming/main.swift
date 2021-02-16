@@ -188,3 +188,26 @@ for (index, vehicle) in vehicles.enumerated() {
         }
     }
 }
+
+/// 객체지향 설계 방식의 문제점
+class Infantry: Vehicle {
+    override init() {
+        super.init()
+        vehicleTypes = [.land]
+        vehicleAttackTypes = [.land]
+        vehicleMovementTypes = [.sea]
+        
+        landAttackRange = 1
+        seaAttackRange = 1
+        
+        hitPoints = 25
+    }
+    
+    override func doLandAttack() {
+        print("Amphibious Land Attack")
+    }
+    
+    override func doAirMovement() {
+        print("Amphibious Land Move")
+    }
+}
