@@ -132,3 +132,12 @@ for (index, vehicle) in vehicles.enumerated() where vehicle is LandVehicle {
         vh.doLandMovement()
     }
 }
+
+// 값 타입에서 변경사항을 유지하고 싶을 때
+func takeHit<T: Vehicle>(vehicle: inout T) {
+    vehicle.takeHit(amount: 10)
+}
+
+var tank = Tank()
+takeHit(vehicle: &tank)
+print(tank.hitPointsRemaining())
