@@ -136,3 +136,34 @@ var myCheeseBurger = Burger(builder: myCheeseBurgerBuilder)
 print()
 myCheeseBurger.tomato = false
 myCheeseBurger.showBurger()
+
+// 단일 빌더 타입을 이용하는 방법
+struct SingleBurgerBuilder {
+    var name = "Burger"
+    var patties = 1
+    var bacon = false
+    var cheese = false
+    var pickles = true
+    var ketchup = true
+    var mustard = true
+    var lettuce = false
+    var tomato = false
+    
+    mutating func setPatties(choice: Int) { self.patties = choice }
+    mutating func setBacon(choice: Bool) { self.bacon = choice }
+    mutating func setCheese(choice: Bool) { self.cheese = choice }
+    mutating func setPickles(choice: Bool) { self.pickles = choice }
+    mutating func setKetchup(choice: Bool) { self.ketchup = choice }
+    mutating func setMustard(choice: Bool) { self.mustard = choice }
+    mutating func setLettuce(choice: Bool) { self.lettuce = choice }
+    mutating func setTomato(choice: Bool) { self.tomato = choice }
+    
+    func buildBurgerOld(name: String) -> BurgerOld {
+        return BurgerOld(name: name, patties: patties, bacon: bacon, cheese: cheese, pickles: pickles, ketchup: ketchup, mustard: mustard, lettuce: lettuce, tomato: tomato)
+    }
+}
+
+var singleBurgerBuilder = SingleBurgerBuilder()
+singleBurgerBuilder.setCheese(choice: true)
+singleBurgerBuilder.setBacon(choice: true)
+var jonBurger = singleBurgerBuilder.buildBurgerOld(name: "Jon's Burger")
