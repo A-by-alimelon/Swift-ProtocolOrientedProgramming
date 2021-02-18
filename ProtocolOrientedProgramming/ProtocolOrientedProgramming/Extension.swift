@@ -24,7 +24,7 @@ print(myString.getFirstChar())
 // subscript 추가
 extension String {
     subscript(r: CountableClosedRange<Int>) -> String {
-        get {
+        get {   
             let start = index(self.startIndex, offsetBy: r.lowerBound)
             let end = index(self.startIndex, offsetBy: r.upperBound)
             return String(self[start..<end])
