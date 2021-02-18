@@ -197,3 +197,47 @@ extension TextValidation {
         }
     }
 }
+
+class AlphaValidation: TextValidation {
+    static let sharedInstance = AlphaValidation()
+    private init() {}
+    let regExFindMatchString = "^[a-zA-Z]{0,10}"
+    let validationMessage = "Can only contain Alpha characters"
+}
+
+class AlphaNumericValidation: TextValidation {
+    static let sharedInstance = AlphaNumericValidation()
+    private init() {}
+    
+    let regExFindMatchString = "^[a-zA-Z0-9]{0,10}"
+    let validationMessage = "Can only contain Alpha Numeric characters"
+}
+
+class NumericValidation: TextValidation {
+    static let sharedInstance = NumericValidation()
+    private init() {}
+    
+    let regExFindMatchString = "^[0-9]{0,10}"
+    let validationMessage = "Can only contain Numeric characters"
+}
+
+// 인자 값에 따라 해당되는 textValidation을 return 하는 메소드
+func getValidator(alphaCharacters: Bool, numericCharacters: Bool) -> TextValidation? {
+    if alphaCharacters && numericCharacters {
+        return AlphaNumericValidation.sharedInstance
+    } else if alphaCharacters && !numericCharacters {
+        return AlphaValidation.sharedInstance
+    } else if !alphaCharacters && numericCharacters {
+        return NumericValidation.sharedInstance
+    } else {
+        return nil
+    }
+}
+
+print()
+var str = "abc123"
+var validation1 = getValidator(alphaCharacters: true, numericCharacters: false)
+print("String validated: \(validation1?.validateString(str: str))")
+
+var validation2 = getValidator(alphaCharacters: true, numericCharacters: true)
+print("String validated: \(validation2?.validateString(str: str))")
