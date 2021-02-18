@@ -119,7 +119,7 @@ extension TextValidation {
     
     func getMatchingString(str: String) -> String? {
         if let newMatch = str.range(of: regExFindMatchString, options: .regularExpression) {
-            return str.substring(with: newMatch) // deprecated된 문법
+            return String(str[newMatch]) // deprecated된 문법
         } else {
             return nil
         }

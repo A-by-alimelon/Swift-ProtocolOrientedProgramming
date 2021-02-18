@@ -167,3 +167,33 @@ var singleBurgerBuilder = SingleBurgerBuilder()
 singleBurgerBuilder.setCheese(choice: true)
 singleBurgerBuilder.setBacon(choice: true)
 var jonBurger = singleBurgerBuilder.buildBurgerOld(name: "Jon's Burger")
+
+// 팩토리 메소드 패턴
+protocol TextValidation {
+    var regExFindMatchString: String {get}
+    var validationMessage: String {get}
+}
+
+extension TextValidation {
+    var regExMatchingString: String {
+        get {
+            return regExFindMatchString + "$"
+        }
+    }
+    
+    func validateString(str: String) -> Bool {
+        if let _ = str.range(of: regExMatchingString, options: .regularExpression) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func getMatchingString(str: String) -> String? {
+        if let newMatch = str.range(of: regExFindMatchString, options: .regularExpression) {
+            return String(str[newMatch])
+        } else {
+            return nil
+        }
+    }
+}
