@@ -251,7 +251,10 @@ protocol Message {
 }
 
 protocol Sender {
-    func sendMessage(message: Message)
+    var message: Message? {get set}
+    func sendMessage()
+    func verifyMessage()
+    
 }
 
 class PlainTextMessage: Message {
@@ -280,25 +283,36 @@ class DESEncyptedMessage: Message {
 }
 
 class EmailSender: Sender {
-    func sendMessage(message: Message) {
+    var message: Message?
+    
+    func sendMessage() {
         print("Sending through E-Mail:")
-        print(" \(message.messageString)")
+        print(" \(message!.messageString)")
+    }
+    
+    func verifyMessage() {
+        print("Verifying E-Mail message")
     }
 }
 
 class SMSSender: Sender {
-    func sendMessage(message: Message) {
+    var message: Message?
+    
+    func sendMessage() {
         print("Sending through SMS: ")
-        print(" \(message.messageString)")
+        print(" \(message!.messageString)")
+    }
+    
+    func verifyMessage() {
+        print("Verifying SMS message")
     }
 }
 
 var myMessage = PlainTextMessage(messageString: "Plain Text Message")
 myMessage.prepareMessage()
 var sender = SMSSender()
-sender.sendMessage(message: myMessage)
+sender.message = myMessage
+sender.verifyMessage()
+sender.sendMessage()
 
 // 메세지를 보내기 전에 검증하는 요구 사항 추가
-extension Sender {
-    func verityMessage()
-}
