@@ -241,3 +241,64 @@ print("String validated: \(validation1?.validateString(str: str))")
 
 var validation2 = getValidator(alphaCharacters: true, numericCharacters: true)
 print("String validated: \(validation2?.validateString(str: str))")
+
+/// 구조
+// 브리지 패턴
+protocol Message {
+    var messageString: String {get set}
+    init(messageString: String)
+    func prepareMessage()
+}
+
+protocol Sender {
+    func sendMessage(message: Message)
+}
+
+class PlainTextMessage: Message {
+    var messageString: String
+    
+    required init(messageString: String) {
+        self.messageString = messageString
+    }
+    
+    func prepareMessage() {
+        // 아무것도 안함
+    }
+}
+
+class DESEncyptedMessage: Message {
+    var messageString: String
+    
+    required init(messageString: String) {
+        self.messageString = messageString
+    }
+    
+    func prepareMessage() {
+        // 암호화한 메시지 생성
+        self.messageString = "DES: " + self.messageString
+    }
+}
+
+class EmailSender: Sender {
+    func sendMessage(message: Message) {
+        print("Sending through E-Mail:")
+        print(" \(message.messageString)")
+    }
+}
+
+class SMSSender: Sender {
+    func sendMessage(message: Message) {
+        print("Sending through SMS: ")
+        print(" \(message.messageString)")
+    }
+}
+
+var myMessage = PlainTextMessage(messageString: "Plain Text Message")
+myMessage.prepareMessage()
+var sender = SMSSender()
+sender.sendMessage(message: myMessage)
+
+// 메세지를 보내기 전에 검증하는 요구 사항 추가
+extension Sender {
+    func verityMessage()
+}
