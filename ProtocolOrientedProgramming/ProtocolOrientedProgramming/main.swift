@@ -86,3 +86,31 @@ compress.compressFiles(filePaths: filePaths)
 
 compress.strategy = rar
 compress.compressFiles(filePaths: filePaths)
+
+// 옵저버 패턴
+// 1. NotificationCenter 이용
+let NCNAME = "Notification Name"
+
+class PostType {
+    let nc = NotificationCenter.default
+    
+    func post() {
+        nc.post(name: Notification.Name(NCNAME), object: nil)
+    }
+}
+
+class ObserverType {
+    let nc = NotificationCenter.default
+    
+    init() {
+        nc.addObserver(self, selector: #selector(receiveNotification(notification:)), name: Notification.Name(NCNAME), object: nil)
+    }
+    
+    @objc func receiveNotification(notification: Notification) {
+        print("Notification Received")
+    }
+}
+
+var postType = PostType()
+var observerType = ObserverType()
+postType.post()
