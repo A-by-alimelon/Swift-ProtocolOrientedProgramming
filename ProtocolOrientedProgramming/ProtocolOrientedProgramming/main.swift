@@ -114,3 +114,53 @@ class ObserverType {
 var postType = PostType()
 var observerType = ObserverType()
 postType.post()
+
+// 2. protocol 이용
+protocol ZombieObserver {
+    func turnLeft()
+    func turnRight()
+    func seesUs()
+}
+
+class MyObserver: ZombieObserver {
+    func turnLeft() {
+        print("Zombie turned left, we move right")
+    }
+    
+    func turnRight() {
+        print("Zombie turned right, we move left")
+    }
+    
+    func seesUs() {
+        print("Zombie sees us, RUN!!!!")
+    }
+}
+
+struct Zombie {
+    var observer: ZombieObserver
+    
+    // 보통 observer의 함수를 호출할 때에는 새로운 쓰레드에서 한다!
+    func turnZombieLeft() {
+        // 왼쪽으로 돌고
+        // 옵저버에게 알린다.
+        observer.turnLeft()
+    }
+    
+    func turnZombieRight() {
+        // 오른쪽으로 돌고
+        // 옵저버에게 알린다.
+        observer.turnRight()
+    }
+    
+    func spotHuman() {
+        // 사람을 추적
+        // 옵저버에게 알린다.
+        observer.seesUs()
+    }
+}
+
+var observer = MyObserver()
+var zombie = Zombie(observer: observer)
+
+zombie.turnZombieLeft()
+zombie.spotHuman()
