@@ -376,3 +376,23 @@ struct RentalCarBooking {
     }
 }
 
+// 퍼사드 패턴 구현
+struct TravelFacade {
+    var hotels: [Hotel]?
+    var flights: [Flight]?
+    var cars: [RentalCar]?
+    
+    // 각각의 API에 직접 접근할 필요 없이 이 타입을 사용하여 검색, 예약할 수 있다. 
+    init(to: Date, from: Date) {
+        hotels = HotelBooking.getHotelNameForDates(to: to, from: from)
+        flights = FlightBooking.getFlightNameForDates(to: to, from: from)
+        cars = RentalCarBooking.getRentalCarNameForDates(to: to, from: from)
+    }
+    
+    func bookTrip(hotel: Hotel, flight: Flight, rentalCar: RentalCar) {
+        HotelBooking.bookHotel(hotel: hotel)
+        FlightBooking.bookFlight(flight: flight)
+        RentalCarBooking.bookRentalCar(rentalCar: rentalCar)
+    }
+}
+
