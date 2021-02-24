@@ -28,6 +28,7 @@
 		FA7040BE25D55C470020AD42 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		FA71C70B25D84CB300E3A437 /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		FA7A72AB25E6519C0027EECB /* DesignPattern-Creational.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DesignPattern-Creational.swift"; sourceTree = "<group>"; };
+		FA7A72AF25E651D80027EECB /* DesignPattern-Structural.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DesignPattern-Structural.swift"; sourceTree = "<group>"; };
 		FAFFF4CE25D9842800CB7976 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		FAFFF4D225DA999600CB7976 /* Generic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generic.swift; sourceTree = "<group>"; };
 		FAFFF4D625DBDAF900CB7976 /* OOP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOP.swift; sourceTree = "<group>"; };
@@ -66,6 +67,7 @@
 			children = (
 				FA7040B625D55BC00020AD42 /* main.swift */,
 				FA7A72AB25E6519C0027EECB /* DesignPattern-Creational.swift */,
+				FA7A72AF25E651D80027EECB /* DesignPattern-Structural.swift */,
 				FAFFF4DA25DD61E900CB7976 /* POP.swift */,
 				FAFFF4D625DBDAF900CB7976 /* OOP.swift */,
 				FAFFF4D225DA999600CB7976 /* Generic.swift */,
