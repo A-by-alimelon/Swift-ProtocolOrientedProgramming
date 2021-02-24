@@ -51,3 +51,38 @@ var startValue = calc.performCalculation(num1: 25, num2: 10, command: Subtractio
 print(startValue)
 var answer = calc.performCalculation(num1: startValue, num2: 5, command: MultiplicationCommand())
 print(answer)
+
+// 스트래티지 패턴
+protocol CompressionStrategy {
+    func compressFiles(filePaths: [String])
+}
+
+struct ZipCompressionStrategy: CompressionStrategy {
+    func compressFiles(filePaths: [String]) {
+        print("Using Zip Compression")
+    }
+}
+
+struct RarCompressionStrategy: CompressionStrategy {
+    func compressFiles(filePaths: [String]) {
+        print("Using RAR Compression")
+    }
+}
+
+struct CompressContent {
+    var strategy: CompressionStrategy
+    
+    func compressFiles(filePaths: [String]) {
+        strategy.compressFiles(filePaths: filePaths)
+    }
+}
+
+var filePaths = ["file1.txt", "file2.txt"]
+var zip = ZipCompressionStrategy()
+var rar = RarCompressionStrategy()
+
+var compress = CompressContent(strategy: zip)
+compress.compressFiles(filePaths: filePaths)
+
+compress.strategy = rar
+compress.compressFiles(filePaths: filePaths)
