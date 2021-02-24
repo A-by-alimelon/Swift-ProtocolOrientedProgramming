@@ -317,14 +317,14 @@ sender.verifyMessage()
 sender.sendMessage()
 
 // 위의 작업 단위를 하나로 묶는 브릿지 타입 생성
-    struct MessageBridge {
-        static func sendMessage(message: Message, sender: Sender) {
-            var sender = sender
-            message.prepareMessage()
-            sender.message = message
-            sender.verifyMessage()
-            sender.sendMessage()
-        }
+struct MessageBridge {
+    static func sendMessage(message: Message, sender: Sender) {
+        var sender = sender
+        message.prepareMessage()
+        sender.message = message
+        sender.verifyMessage()
+        sender.sendMessage()
     }
+}
 
 
