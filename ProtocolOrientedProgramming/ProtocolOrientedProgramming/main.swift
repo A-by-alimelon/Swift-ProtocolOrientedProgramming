@@ -327,4 +327,52 @@ struct MessageBridge {
     }
 }
 
+// 퍼사드 패턴
+struct Hotel {
+    // 호텔 객실에 대한 정보
+}
+
+struct HotelBooking {
+    static func getHotelNameForDates(to: Date, from: Date) -> [Hotel]? {
+        let hotels = [Hotel]()
+        // 호텔을 가져오는 로직
+        return hotels
+    }
+    
+    static func bookHotel(hotel: Hotel) {
+        // 호텔 객실을 예약하는 로직
+    }
+}
+
+struct Flight {
+    // 항공기에 대한 정보
+}
+
+struct FlightBooking {
+    static func getFlightNameForDates(to: Date, from: Date) -> [Flight]? {
+        let flights = [Flight]()
+        // 항공기를 가져오는 로직
+        return flights
+    }
+    
+    static func bookFlight(flight: Flight) {
+        // 항공기를 예약하는 로직
+    }
+}
+
+struct RentalCar {
+    // 렌터카에 대한 정보
+}
+
+struct RentalCarBooking {
+    static func getRentalCarNameForDates(to: Date, from: Date) -> [RentalCar]? {
+        let cars = [RentalCar]()
+        // 렌터카를 가져오는 로직
+        return cars
+    }
+    
+    static func bookRentalCar(rentalCar: RentalCar) {
+        // 렌터카를 예약하는 로직
+    }
+}
 
