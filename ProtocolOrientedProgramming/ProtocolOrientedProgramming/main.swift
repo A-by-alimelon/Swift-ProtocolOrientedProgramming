@@ -382,7 +382,7 @@ struct TravelFacade {
     var flights: [Flight]?
     var cars: [RentalCar]?
     
-    // 각각의 API에 직접 접근할 필요 없이 이 타입을 사용하여 검색, 예약할 수 있다. 
+    // 각각의 API에 직접 접근할 필요 없이 이 타입을 사용하여 검색, 예약할 수 있다.
     init(to: Date, from: Date) {
         hotels = HotelBooking.getHotelNameForDates(to: to, from: from)
         flights = FlightBooking.getFlightNameForDates(to: to, from: from)
@@ -396,3 +396,39 @@ struct TravelFacade {
     }
 }
 
+// 프록시 디자인 패턴
+// 코드와 원격 API 사이에 추상 계층을 추가
+// iTunes API에 정보를 검색하는 프록시 타입
+public typealias DataFromURLCompletionClosure = (Data?) -> Void
+public struct ITunesProxy {
+    public func sendGetRequest(searchTerm: String, _ handler: @escaping DataFromURLCompletionClosure) {
+        let sessionConfiguration = URLSessionConfiguration.default
+        var url = URLComponents()
+        
+        // url이 변경 되어도 여기서만 바꾸면 된다.
+        url.scheme = "https"
+        url.host = "itunes.apple.com"
+        url.path = "/search"
+        url.queryItems = [URLQueryItem(name: "term", value: searchTerm)]
+        
+        if let queryUrl = url.url {
+            var request = URLRequest(url: queryUrl)
+            request.httpMethod = "GET"
+            
+            let urlSession = URLSession(configuration: sessionConfiguration, delegate: nil, delegateQueue: nil)
+            let sessionTask = urlSession.dataTask(with: request) { (data, response, error) in
+                handler(data)
+            }
+            sessionTask.resume()
+        }
+    }
+}
+
+let proxy = ITunesProxy()
+proxy.sendGetRequest(searchTerm: "jimmy+buffett") {
+    if let data = $0, let sString = String(data: data, encoding: String.Encoding(rawValue: String.Encoding.utf8.rawValue)) {
+        print(sString)
+    } else {
+        print("Data is nil")
+    }
+}
