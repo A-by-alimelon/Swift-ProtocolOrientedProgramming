@@ -250,6 +250,7 @@ protocol Message {
     func prepareMessage()
 }
 
+// 메세지를 보내기 전에 검증하는 요구 사항 추가
 protocol Sender {
     var message: Message? {get set}
     func sendMessage()
@@ -315,4 +316,13 @@ sender.message = myMessage
 sender.verifyMessage()
 sender.sendMessage()
 
-// 메세지를 보내기 전에 검증하는 요구 사항 추가
+// 위의 작업 단위를 하나로 묶는 브릿지 타입 생성
+struct MessageBridge {
+    static func sendMessage(message: Message, sender: Sender) {
+        var sender = sender
+        message.prepareMessage()
+        sender.message = message
+        sender.verifyMessage()
+        sender.sendMessage()
+    }
+}
