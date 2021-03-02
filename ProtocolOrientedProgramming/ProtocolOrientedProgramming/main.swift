@@ -33,3 +33,18 @@ extension LoggerProfile {
         return dateFormatter.string(from: date)
     }
 }
+
+struct LoggerNull: LoggerProfile {
+    let loggerProfileId = "hoffman.jon.logger.null"
+    func writeLog(level: String, message: String) {
+        // 아무 일도 하지 않는다.
+    }
+}
+
+struct LoggerConsole: LoggerProfile {
+    let loggerProfileId = "hoffman.jon.logger.console"
+    func writeLog(level: String, message: String) {
+        let now = getCUrrentDataString()
+        print("\(now): \(level) - \(message)")
+    }
+}
