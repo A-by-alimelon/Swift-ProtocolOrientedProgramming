@@ -20,6 +20,7 @@ import Foundation
 
 /// 사례 연구
 // 로깅 서비스
+// LoggerProfile
 protocol LoggerProfile {
     var loggerProfileId: String {get}
     func writeLog(level: String, message: String)
@@ -48,3 +49,20 @@ struct LoggerConsole: LoggerProfile {
         print("\(now): \(level) - \(message)")
     }
 }
+
+// Logger Type
+enum LogLevels: String {
+    case Fatal
+    case Error
+    case Warn
+    case Debug
+    case Info
+    
+    static let allValues = [Fatal, Error, Warn, Debug, Info]
+}
+
+protocol Logger {
+    static var loggers: [LogLevels: [LoggerProfile]] {get set}
+    static func writeLog(logLevel: LogLevels, message: String)
+}
+
