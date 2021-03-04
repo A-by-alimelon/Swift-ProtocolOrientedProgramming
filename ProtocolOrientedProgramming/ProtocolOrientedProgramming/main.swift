@@ -116,3 +116,25 @@ extension Logger {
         return !logProfiles.isEmpty
     }
 }
+
+// 커맨드 패턴 사용 
+struct MyLogger: Logger {
+    static var loggers = [LogLevels : [LoggerProfile]]()
+    
+    static func writeLog(logLevel: LogLevels, message: String) {
+        guard hasLoaggerForLevel(logLevel: logLevel) else {
+            print("No logger")
+            return
+        }
+        if let logProfiles = loggers[logLevel] {
+            for logProfile in logProfiles {
+                logProfile.writeLog(level: logLevel.rawValue, message: message)
+            }
+        }
+    }
+}
+
+MyLogger.addLogProfileToAllLevels(defaultLoggerProfile: LoggerConsole())
+MyLogger.writeLog(logLevel: LogLevels.Debug, message: "Debug Message 1")
+MyLogger.writeLog(logLevel: LogLevels.Error, message: "Error Message 1")
+
