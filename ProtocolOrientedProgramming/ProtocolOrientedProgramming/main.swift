@@ -138,3 +138,20 @@ MyLogger.addLogProfileToAllLevels(defaultLoggerProfile: LoggerConsole())
 MyLogger.writeLog(logLevel: LogLevels.Debug, message: "Debug Message 1")
 MyLogger.writeLog(logLevel: LogLevels.Error, message: "Error Message 1")
 
+// 데이터 접근 계층
+// 데이터 모델 계층
+typealias TeamData = (teamId: Int64?, city: String?, nickName: String?, abbreviation: String?)
+typealias PlayerData = (playerId: Int64?, firstName: String?, lastName: String?, number: Int?, teamId: Int64?, position: Positions?)
+
+enum Positions: String {
+    case pitcher = "Pitcher"
+    case catcher = "Catcher"
+    case firstBase = "First Base"
+    case secondBase = "Second Base"
+    case thirdBase = "Third Base"
+    case shortstop = "Shortstop"
+    case leftField = "Left Field"
+    case centerField = "Center Field"
+    case rightField = "Right Field"
+    case designatedHitter = "Designated Hitter"
+}
