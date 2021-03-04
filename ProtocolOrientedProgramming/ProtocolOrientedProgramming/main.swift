@@ -155,3 +155,58 @@ enum Positions: String {
     case rightField = "Right Field"
     case designatedHitter = "Designated Hitter"
 }
+
+// 데이터 도우미 계층
+enum DataAccessError: Error {
+    case datastoreConnectionError
+    case insertError
+    case deleteError
+    case searchError
+    case nilInData
+}
+
+protocol DataHelper {
+    associatedtype T
+    static func insert(_ item: T) throws -> Int64?
+    static func delete(_ item: T) throws -> Void
+    static func findAll() throws -> [T]?
+}
+
+struct TeamDataHelper: DataHelper {
+    typealias T = TeamData
+    static var teamData: [T] = []
+    
+    static func insert(_ item: TeamData) throws -> Int64? {
+        guard item.teamId != nil && item.city != nil && item.nickName != nil && item.abbreviation != nil else {
+            throw DataAccessError.nilInData
+        }
+        
+        teamData.append(item)
+        return item.teamId
+    }
+    
+    static func delete(_ item: TeamData) throws {
+        guard let id = item.teamId else {
+            throw DataAccessError.nilInData
+        }
+        
+        let teamArray = teamData
+        for (index, team) in teamArray.enumerated() where team.teamId == id {
+            teamData.remove(at: index)
+            return
+        }
+        throw DataAccessError.deleteError
+    }
+    
+    static func findAll() throws -> [TeamData]? {
+        return teamData
+    }
+    
+    static func find(_ id: Int64) throws -> T? {
+        for team in teamData where team.teamId == id {
+            return team
+        }
+        
+        return nil
+    }
+}
