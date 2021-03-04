@@ -210,3 +210,71 @@ struct TeamDataHelper: DataHelper {
         return nil
     }
 }
+
+// 브리지 계층
+struct Team {
+    var teamId: Int64?
+    var city: String?
+    var nickName: String?
+    var abbreviation: String?
+}
+
+struct Player {
+    var playerId: Int64?
+    var firstName: String?
+    var lastName: String?
+    var number: Int?
+    var teamId: Int64? {
+        didSet {
+            if let t = try? TeamBridge.retrieve(teamId!) {
+                team = t
+            }
+        }
+    }
+    var position: Positions?
+    var team: Team?
+    
+    init(playerId: Int64?, firstName: String?, lastName: String?, number: Int?, teamId: Int64?, position: Positions?) {
+        self.playerId = playerId
+        self.firstName = firstName
+        self.lastName = lastName
+        self.number = number
+        self.teamId = teamId
+        self.position = position
+        
+        // 초기화 단계에서는 프로퍼티 옵저버가 호출되지 않는다.
+        if let id = self.teamId {
+            if let t = try? TeamBridge.retrieve(id) {
+                team = t
+            }
+        }
+    }
+}
+
+struct TeamBridge {
+    static func save(_ team: inout Team) throws {
+        let teamData = toTeamData(team)
+        let id = try TeamDataHelper.insert(teamData)
+        team.teamId = id
+    }
+    
+    static func delete(_ team: Team) throws {
+        let teamData = toTeamData(team)
+        try TeamDataHelper.delete(teamData)
+    }
+    
+    static func retrieve(_ id: Int64) throws -> Team? {
+        if let t = try TeamDataHelper.find(id) {
+            return toTeam(t)
+        }
+        return nil
+    }
+    
+    static func toTeamData(_ team: Team) -> TeamData {
+        return TeamData(teamId: team.teamId, city: team.city, nickName: team.nickName, abbreviation: team.abbreviation)
+    }
+    
+    static func toTeam(_ teamData: TeamData) -> Team {
+        return Team(teamId: teamData.teamId, city: teamData.city, nickName: teamData.nickName, abbreviation: teamData.abbreviation)
+    }
+}
