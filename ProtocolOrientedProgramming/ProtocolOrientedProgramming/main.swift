@@ -349,3 +349,17 @@ struct PlayerBridge {
         return Player(playerId: playerData.playerId, firstName: playerData.firstName, lastName: playerData.lastName, number: playerData.number, teamId: playerData.teamId, position: playerData.position)
     }
 }
+
+var bos = Team(teamId: 0, city: "Boston", nickName: "Red Sox", abbreviation: "BOS")
+try? TeamBridge.save(&bos)
+
+var ortiz = Player(playerId: 0, firstName: "David", lastName: "Ortiz", number: 34, teamId: bos.teamId, position: .designatedHitter)
+try? PlayerBridge.save(&ortiz)
+
+if let team = try? TeamBridge.retrieve(0) {
+    print("--- \(team.city)")
+}
+
+if let player = try? PlayerBridge.retrieve(0) {
+    print("--- \(player.firstName) \(player.lastName) plays for \(player.team?.city)")
+}
