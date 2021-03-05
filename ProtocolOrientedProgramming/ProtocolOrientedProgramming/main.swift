@@ -195,6 +195,7 @@ struct TeamDataHelper: DataHelper {
             teamData.remove(at: index)
             return
         }
+        
         throw DataAccessError.deleteError
     }
     
@@ -209,6 +210,47 @@ struct TeamDataHelper: DataHelper {
         
         return nil
     }
+}
+
+struct PlayerDataHelper: DataHelper {
+    typealias T = PlayerData
+    static var playerData: [T] = []
+    
+    static func insert(_ item: PlayerData) throws -> Int64? {
+        guard item.playerId != nil && item.firstName != nil && item.lastName != nil && item.number != nil && item.position != nil && item.teamId != nil else {
+            throw DataAccessError.nilInData
+        }
+        
+        playerData.append(item)
+        return item.playerId
+    }
+    
+    static func delete(_ item: T) throws -> Void {
+        guard let id = item.playerId else {
+            throw DataAccessError.nilInData
+        }
+        
+        let playerArray = playerData
+        for (index, player) in playerArray.enumerated() where player.playerId == id {
+            playerData.remove(at: index)
+            return
+        }
+        
+        throw DataAccessError.deleteError
+    }
+    
+    static func findAll() throws -> [PlayerData]? {
+        return playerData
+    }
+    
+    static func find(_ id: Int64) throws -> T? {
+        for player in playerData where player.playerId == id {
+            return player
+        }
+        
+        return nil
+    }
+    
 }
 
 // 브리지 계층
@@ -276,5 +318,34 @@ struct TeamBridge {
     
     static func toTeam(_ teamData: TeamData) -> Team {
         return Team(teamId: teamData.teamId, city: teamData.city, nickName: teamData.nickName, abbreviation: teamData.abbreviation)
+    }
+}
+
+struct PlayerBridge {
+    static func save(_ player: inout Player) throws {
+        let playerData = toPlayerData(player)
+        let id = try PlayerDataHelper.insert(playerData)
+        player.playerId = id
+    }
+    
+    static func delete(_ player: Player) throws {
+        let playerData = toPlayerData(player)
+        try PlayerDataHelper.delete(playerData)
+    }
+    
+    static func retrieve(_ id: Int64) throws -> Player? {
+        if let p = try PlayerDataHelper.find(id) {
+            return toPlayer(p)
+        }
+        
+        return nil
+    }
+    
+    static func toPlayerData(_ player: Player) -> PlayerData {
+        return PlayerData(playerId: player.playerId, firstName: player.firstName, lastName: player.lastName, number: player.number, teamId: player.teamId, position: player.position)
+    }
+    
+    static func toPlayer(_ playerData: PlayerData) -> Player {
+        return Player(playerId: playerData.playerId, firstName: playerData.firstName, lastName: playerData.lastName, number: playerData.number, teamId: playerData.teamId, position: playerData.position)
     }
 }
